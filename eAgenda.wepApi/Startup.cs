@@ -5,6 +5,7 @@ using eAgenda.Infra.Configs;
 using eAgenda.Infra.Orm;
 using eAgenda.Infra.Orm.ModuloTarefa;
 using eAgenda.wepApi.Controllers.Config.AutoMapperConfig;
+using eAgenda.wepApi.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,6 +34,7 @@ namespace eAgenda.wepApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.Configure<ApiBehaviorOptions>(config =>
             {
                 config.SuppressModelStateInvalidFilter = true;
@@ -49,7 +51,11 @@ namespace eAgenda.wepApi
             services.AddTransient<ServicoTarefa>();
 
 
-            services.AddControllers();
+            services.AddControllers(config =>
+            {
+                config.Filters.Add<ValidarViewModelActionFilter>();
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "eAgenda.wepApi", Version = "v1" });
