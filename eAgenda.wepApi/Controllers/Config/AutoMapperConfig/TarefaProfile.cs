@@ -9,23 +9,18 @@ namespace eAgenda.wepApi.Controllers.Config.AutoMapperConfig
     {
         public TarefaProfile()
         {
-            CreateMap<Tarefa, ListarTarefaViewModel>()
-                        .ForMember(destino => destino.Prioridade, opt => opt.MapFrom(origrem => origrem.Prioridade.GetDescription()))
-                        .ForMember(destino => destino.Situacao, opt =>
-                           opt.MapFrom(origem => origem.PercentualConcluido == 100 ? "Concluido" : "Pendente"));
-            CreateMap<Tarefa, VisualizarTarefaViewModel>()
-                .ForMember(destino => destino.Prioridade, opt => opt.MapFrom(origrem => origrem.Prioridade.GetDescription()))
-                .ForMember(destino => destino.Situacao, opt =>
-                   opt.MapFrom(origem => origem.PercentualConcluido == 100 ? "Concluido" : "Pendente"))
-                .ForMember(destino => destino.QuantidadeItens, opt => opt.MapFrom(x => x.Itens.Count));
-            CreateMap<ItemTarefa, VisualizarItenTarefaViewModel>().
-                ForMember(destino => destino.Situacao, opt =>
-                    opt.MapFrom(origem => origem.Concluido ? "Concluido" : "Pendente"));
+            ConverterDeEntidadeParaViewMovel();
 
+            ConverterDeViewModelParaEntidade();
+        }
+        private void ConverterDeViewModelParaEntidade()
+        {
             CreateMap<InserirTarefaViewModel, Tarefa>()
                 .ForMember(destino => destino.Itens, opt => opt.Ignore())
                 .AfterMap((viewModel, tarefa) =>
                 {
+                    if (viewModel.Itens == null) return;
+
                     foreach (var itemAntigo in viewModel.Itens)
                     {
                         var itemNovo = new ItemTarefa();
@@ -40,6 +35,23 @@ namespace eAgenda.wepApi.Controllers.Config.AutoMapperConfig
                {
                    CarregandoDependenciasDeEdicaoTarefa(viewModel, tarefa);
                });
+        }
+        private void ConverterDeEntidadeParaViewMovel()
+        {
+            CreateMap<Tarefa, ListarTarefaViewModel>()
+                                    .ForMember(destino => destino.Prioridade, opt => opt.MapFrom(origrem => origrem.Prioridade.GetDescription()))
+                                    .ForMember(destino => destino.Situacao, opt =>
+                                       opt.MapFrom(origem => origem.PercentualConcluido == 100 ? "Concluido" : "Pendente"));
+
+            CreateMap<Tarefa, VisualizarTarefaViewModel>()
+                .ForMember(destino => destino.Prioridade, opt => opt.MapFrom(origrem => origrem.Prioridade.GetDescription()))
+                .ForMember(destino => destino.Situacao, opt =>
+                   opt.MapFrom(origem => origem.PercentualConcluido == 100 ? "Concluido" : "Pendente"))
+                .ForMember(destino => destino.QuantidadeItens, opt => opt.MapFrom(x => x.Itens.Count));
+
+            CreateMap<ItemTarefa, VisualizarItenTarefaViewModel>().
+                ForMember(destino => destino.Situacao, opt =>
+                    opt.MapFrom(origem => origem.Concluido ? "Concluido" : "Pendente"));
         }
 
         private void CarregandoDependenciasDeEdicaoTarefa(EditarTarefaViewModel viewModel, Tarefa tarefa)
