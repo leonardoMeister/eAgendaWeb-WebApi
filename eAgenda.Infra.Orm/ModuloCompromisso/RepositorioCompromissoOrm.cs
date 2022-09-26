@@ -1,12 +1,13 @@
 ﻿using eAgenda.Dominio;
 using eAgenda.Dominio.ModuloCompromisso;
+using eAgenda.Dominio.ModuloContato;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace eAgenda.Infra.Orm.ModuloCompromisso
-{
+{ 
     public class RepositorioCompromissoOrm : IRepositorioCompromisso
     {
         private DbSet<Compromisso> compromissos;
@@ -41,6 +42,10 @@ namespace eAgenda.Infra.Orm.ModuloCompromisso
         public List<Compromisso> SelecionarTodos()
         {
             return compromissos.ToList();
+        }
+        public List<Compromisso> SelecionarTodosComContato()
+        {
+            return compromissos.Include(x=> x.Contato).ToList();
         }
 
         public List<Compromisso> SelecionarCompromissosFuturos(DateTime dataInicial, DateTime dataFinal)

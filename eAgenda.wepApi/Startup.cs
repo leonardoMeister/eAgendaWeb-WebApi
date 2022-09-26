@@ -1,10 +1,13 @@
+using eAgenda.Aplicacao.ModuloCompromisso;
 using eAgenda.Aplicacao.ModuloContato;
 using eAgenda.Aplicacao.ModuloTarefa;
 using eAgenda.Dominio;
+using eAgenda.Dominio.ModuloCompromisso;
 using eAgenda.Dominio.ModuloContato;
 using eAgenda.Dominio.ModuloTarefa;
 using eAgenda.Infra.Configs;
 using eAgenda.Infra.Orm;
+using eAgenda.Infra.Orm.ModuloCompromisso;
 using eAgenda.Infra.Orm.ModuloContato;
 using eAgenda.Infra.Orm.ModuloTarefa;
 using eAgenda.wepApi.Controllers.Config.AutoMapperConfig;
@@ -42,6 +45,7 @@ namespace eAgenda.wepApi
             {
                 config.AddProfile<TarefaProfile>();
                 config.AddProfile<ContatoProfile>();
+                config.AddProfile<CompromissoProfile>();
 
             });
 
@@ -55,6 +59,10 @@ namespace eAgenda.wepApi
 
             services.AddScoped<IRepositorioContato, RepositorioContatoOrm>();
             services.AddTransient<ServicoContato>();
+
+            services.AddScoped<IRepositorioCompromisso, RepositorioCompromissoOrm>();
+            services.AddTransient<ServicoCompromisso>();
+
 
             //Adicionando os filtros
             services.AddControllers(config =>

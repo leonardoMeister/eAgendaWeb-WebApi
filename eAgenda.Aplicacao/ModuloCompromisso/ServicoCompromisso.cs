@@ -1,5 +1,6 @@
 ﻿using eAgenda.Dominio;
 using eAgenda.Dominio.ModuloCompromisso;
+using eAgenda.Infra.Orm.ModuloCompromisso;
 using FluentResults;
 using Serilog;
 using System;
@@ -128,7 +129,27 @@ namespace eAgenda.Aplicacao.ModuloCompromisso
                 return Result.Fail(msgErro);
             }
         }
+        public Result<List<Compromisso>> SelecionarTodosComContato()
+        {
+            Log.Logger.Debug("Tentando selecionar compromissos...");
 
+            try
+            {
+                var compromissos = ((RepositorioCompromissoOrm)repositorioCompromisso).SelecionarTodosComContato();
+
+                Log.Logger.Information("Compromissos selecionados com sucesso");
+
+                return Result.Ok(compromissos);
+            }
+            catch (Exception ex)
+            {
+                string msgErro = "Falha no sistema ao tentar selecionar todos os Compromissos";
+
+                Log.Logger.Error(ex, msgErro);
+
+                return Result.Fail(msgErro);
+            }
+        }
         public Result<Compromisso> SelecionarPorId(Guid id)
         {
             Log.Logger.Debug("Tentando selecionar compromisso {CompromissoId}...", id);

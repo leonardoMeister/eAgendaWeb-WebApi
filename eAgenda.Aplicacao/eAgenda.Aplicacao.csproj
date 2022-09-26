@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\eAgenda.Dominio\eAgenda.Dominio.csproj" />
+    <ProjectReference Include="..\eAgenda.Infra.Orm\eAgenda.Infra.Orm.csproj" />
   </ItemGroup>
 
 </Project>
