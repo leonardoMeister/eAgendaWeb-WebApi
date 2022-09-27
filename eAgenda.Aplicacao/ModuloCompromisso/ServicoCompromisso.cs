@@ -178,7 +178,34 @@ namespace eAgenda.Aplicacao.ModuloCompromisso
                 return Result.Fail(msgErro);
             }
         }
+        public Result<Compromisso> SelecionarPorIdComContato(Guid id)
+        {
+            Log.Logger.Debug("Tentando selecionar compromisso {CompromissoId}...", id);
 
+            try
+            {
+                var compromisso = ((RepositorioCompromissoOrm)repositorioCompromisso).SelecionarPorIdComContato(id);
+
+                if (compromisso == null)
+                {
+                    Log.Logger.Warning("Compromisso {CompromissoId} não encontrado", id);
+
+                    return Result.Fail("Compromisso não encontrado");
+                }
+
+                Log.Logger.Information("Compromisso {CompromissoId} selecionado com sucesso", id);
+
+                return Result.Ok(compromisso);
+            }
+            catch (Exception ex)
+            {
+                string msgErro = "Falha no sistema ao tentar selecionar o Compromisso";
+
+                Log.Logger.Error(ex, msgErro + " {CompromissoId}", id);
+
+                return Result.Fail(msgErro);
+            }
+        }
         public Result<List<Compromisso>> SelecionarCompromissosPassados(DateTime now)
         {
             return SelecionarTodos();

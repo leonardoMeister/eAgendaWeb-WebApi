@@ -47,6 +47,10 @@ namespace eAgenda.Infra.Orm.ModuloCompromisso
         {
             return compromissos.Include(x=> x.Contato).ToList();
         }
+        public Compromisso SelecionarPorIdComContato(Guid id)
+        {
+            return compromissos.Include(x => x.Contato).SingleOrDefault(x => x.Id == id);
+        }
 
         public List<Compromisso> SelecionarCompromissosFuturos(DateTime dataInicial, DateTime dataFinal)
         {
@@ -57,5 +61,7 @@ namespace eAgenda.Infra.Orm.ModuloCompromisso
         {
             throw new NotImplementedException();
         }
+
+       
     }
 }
