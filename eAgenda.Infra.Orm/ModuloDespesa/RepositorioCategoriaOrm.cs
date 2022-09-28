@@ -37,6 +37,11 @@ namespace eAgenda.Infra.Orm.ModuloDespesa
         {
             return categorias.SingleOrDefault(x => x.Id == id);
         }
+        public Categoria SelecionarPorIdComRef(Guid id)
+        {
+            return categorias.Include(x => x.Despesas).SingleOrDefault(x => x.Id == id);
+        }
+
 
         public List<Categoria> SelecionarTodos(bool incluirMateriasEhQuestoes)
         {

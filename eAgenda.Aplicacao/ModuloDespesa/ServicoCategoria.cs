@@ -1,5 +1,6 @@
 ﻿using eAgenda.Dominio;
 using eAgenda.Dominio.ModuloDespesa;
+using eAgenda.Infra.Orm.ModuloDespesa;
 using FluentResults;
 using Serilog;
 using System;
@@ -135,7 +136,7 @@ namespace eAgenda.Aplicacao.ModuloDespesa
 
             try
             {
-                var categoria = repositorioCategoria.SelecionarPorId(id);
+                var categoria = ((RepositorioCategoriaOrm)repositorioCategoria).SelecionarPorIdComRef(id);
 
                 if (categoria == null)
                 {
