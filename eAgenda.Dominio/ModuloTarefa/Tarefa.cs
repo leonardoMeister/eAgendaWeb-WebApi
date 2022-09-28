@@ -1,11 +1,12 @@
 ﻿using eAgenda.Dominio.Compartilhado;
+using eAgenda.Dominio.ModuloAutenticacao;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace eAgenda.Dominio.ModuloTarefa
 {
-    [Serializable] 
+    [Serializable]
     public class Tarefa : EntidadeBase<Tarefa>
     {
         private List<ItemTarefa> itens;
@@ -31,6 +32,7 @@ namespace eAgenda.Dominio.ModuloTarefa
         public List<ItemTarefa> Itens { get { return itens; } set { itens = value; } }
         public decimal PercentualConcluido { get; set; }
 
+       
 
         public void CalcularPercentualConcluido()
         {
