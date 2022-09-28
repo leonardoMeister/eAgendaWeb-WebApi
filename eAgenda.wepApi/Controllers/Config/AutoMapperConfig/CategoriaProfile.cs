@@ -45,6 +45,9 @@ namespace eAgenda.wepApi.Controllers.Config.AutoMapperConfig
         {
             CreateMap<EditarCategoriaViewModel, Categoria>();
             CreateMap<InserirCategoriaViewModel, Categoria>();
+            CreateMap<ListarCategoriaViewModel, Categoria>()
+                  .ForMember(destino => destino.Despesas, opt => opt.Ignore());
+
 
         }
     }

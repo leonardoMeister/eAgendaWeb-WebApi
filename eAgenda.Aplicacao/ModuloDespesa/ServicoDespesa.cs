@@ -1,5 +1,6 @@
 ﻿using eAgenda.Dominio;
 using eAgenda.Dominio.ModuloDespesa;
+using eAgenda.Infra.Orm.ModuloDespesa;
 using FluentResults;
 using Serilog;
 using System;
@@ -145,7 +146,7 @@ namespace eAgenda.Aplicacao.ModuloDespesa
 
             try
             {
-                var despesa = repositorioDespesa.SelecionarPorId(id);
+                var despesa = ((RepositorioDespesaOrm)repositorioDespesa).SelecionarPorId(id);
 
                 if (despesa == null)
                 {

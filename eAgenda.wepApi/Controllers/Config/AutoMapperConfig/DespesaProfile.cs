@@ -5,9 +5,9 @@ using System;
 
 namespace eAgenda.wepApi.Controllers.Config.AutoMapperConfig
 {
-    public class DespesaProfile:Profile
+    public class DespesaProfile : Profile
     {
-        public DespesaProfile() 
+        public DespesaProfile()
         {
             ConverterDeEntidadeParaViewMovel();
 
@@ -16,12 +16,14 @@ namespace eAgenda.wepApi.Controllers.Config.AutoMapperConfig
 
         private void ConverterDeViewModelParaEntidade()
         {
+            CreateMap<InserirDespesaViewModel, Despesa>();
 
         }
 
         private void ConverterDeEntidadeParaViewMovel()
         {
             CreateMap<Despesa, ListarDespesaViewModels>();
+            CreateMap<Despesa, VisualizarDespesaViewModels>();
         }
     }
 }
